@@ -1,6 +1,11 @@
+#ifndef TRIP_H
+#define TRIP_H
+
 #include <iostream>
 #include <cstring>  // For std::strlen and std::strcpy
 #include "data.h"
+
+constexpr auto tripDestinationLength = 420;
 
 class Trip {
 private:
@@ -9,45 +14,37 @@ private:
     Date date;
 
 public:  // Only one public specifier is needed
+    
+
+    Trip(int tripID, char * destination[], Date date) {
+        setTripNum(tripID);
+        setTarget(*destination);
+        setDate(date);
+    }
+
+    Trip(Trip& trip) {
+        setTripNum(trip.getTripNum());
+        setTarget(trip.getTarget());
+        setDate(trip.getDate());
+    }
+
     Trip() : TripNum(420), date(1, 2, 3) {
         target = new char[3];  // Allocating memory for "hi" and the null terminator
-        std::strcpy(target, "hi");
+        strcpy_s(target,3, "hi");
     }
+   
 
-    Trip(int t,const char* to, Date d) : TripNum(t), date(d) {
-        setTarget(to);
-    }
-
-    Trip& operator=(const Trip& other) {
-        if (this == &other) {  // Self-assignment check
-            return *this;
-        }
-
-        setTarget(other.getTarget());
-        setTripNum(other.getTripNum());
-        setDate(other.getDate());
-        return *this;
-    }
-
-    ~Trip() {
-        delete[] target;
-    }
-
-    // Copy Constructor
-    Trip(const Trip& other) : target(NULL) {
-        *this = other;  // Using the assignment operator to copy the data
-    }
 
     // Getter functions
     int getTripNum() const { return TripNum; }
-    const char* getTarget() const {
+     char* getTarget(){
         return target;
     }
-    Date getDate() const { return date; }
+    const Date getDate()  { return date; }
 
     // Setter functions
     void setTripNum(int t) {
-        if (t < 0) {
+        if (t <= 0) {
             TripNum = 420;
         }
         else {
@@ -59,15 +56,15 @@ public:  // Only one public specifier is needed
         delete[] target;
         if (isLetters(to)) {
             target = new char[std::strlen(to) + 1];
-            std::strcpy(target, to);
+            strcpy_s(target, std::strlen(to) + 1, to);
         }
         else {
             target = new char[3];  // Allocating memory for "hi" and the null terminator
-            std::strcpy(target, "hi");
+            strcpy_s(target,3, "hi");
         }
     }
 
-    void setDate(const Date& d) {
+     void setDate(const Date& d) {
         date = d;
     }
 
@@ -86,6 +83,7 @@ public:  // Only one public specifier is needed
         date.PrinDat();
     }
 
-   
-   
-};  
+
+
+};
+#endif

@@ -1,3 +1,6 @@
+#ifndef DATA_H
+#define DATA_H
+
 #include <iostream>
 
 class Date {
@@ -7,16 +10,27 @@ private:
     int year;
 
 public:
-    // Default constructor initializing with default values
-    Date() : day(1), month(1), year(2000) {}
-
+   
     // Parameterized constructor that validates input
+
+    Date() {
+        this->year = 1;
+        this->month = 1;
+        this->day = 1;
+    }
+
     Date(int d, int m, int y) {
         setDay(d);
         setMonth(m);
         setYear(y);
     }
 
+    Date(Date& date) {
+        setDay(date.getDay());
+        setMonth(date.getMonth());
+        setYear(date.getYear());
+    }
+    
 
     // Getter functions
     int getDay() const { return day; }
@@ -24,31 +38,39 @@ public:
     int getYear() const { return year; }
 
     // Setter functions
-    void setDay(int d) {
-        if (d > 0 && d <= 30) {
-            day = d;
+    void setYear(int year) {
+        if (year <= 0) {
+            this->year = 0;
         }
         else {
-            day = 0;
+            this->year = year;
         }
     }
-
-    void setMonth(int m) {
-        if (m > 0 && m <= 12) {
-            month = m;
+    void setMonth(int month) {
+        if (month >= 12) {
+            this->month = 12;
+        }
+        else if (month <= 0) {
+            this->month = 0;
         }
         else {
-            month = 0;
+            this->month = month;
         }
     }
-
-    void setYear(int y) {
-        year = y;  // Assuming no validation for year
+    void setDay(int day) {
+        if (day >= 30) {
+            this->day = 30;
+        }
+        else if (day <= 0) {
+            this->day = 0;
+        }
+        else {
+            this->day = day;
+        }
     }
 
     void PrinDat() const {
         std::cout << "Date: " << day << "/" << month << "/" << year << std::endl;
     }
 };
-
 #endif
