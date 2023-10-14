@@ -30,6 +30,8 @@ public:
         setMonth(date.getMonth());
         setYear(date.getYear());
     }
+
+
     
 
     // Getter functions
@@ -38,7 +40,7 @@ public:
     int getYear() const { return year; }
 
     // Setter functions
-    void setYear(int year) {
+    void setYear (int year) {
         if (year <= 0) {
             this->year = 0;
         }

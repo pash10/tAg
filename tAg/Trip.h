@@ -14,11 +14,11 @@ private:
     Date date;
 
 public:  // Only one public specifier is needed
-    
 
-    Trip(int tripID, char * destination[], Date date) {
+
+    Trip(int tripID, char* destination, Date date) {
         setTripNum(tripID);
-        setTarget(*destination);
+        setTarget(destination);
         setDate(date);
     }
 
@@ -27,45 +27,57 @@ public:  // Only one public specifier is needed
         setTarget(trip.getTarget());
         setDate(trip.getDate());
     }
+    \
 
-    Trip() : TripNum(420), date(1, 2, 3) {
+        /*Trip(const Trip& trip) {
+            setTripNum(trip.getTripNum());
+            target = new char[std::strlen(trip.target) + 1];
+            strcpy_s(target, std::strlen(trip.target) + 1, trip.target);
+            setDate(trip.getDate());
+            setDate(trip.getDate());
+        }*/
+
+
+        Trip() : TripNum(420), date(1, 2, 3) {
         target = new char[3];  // Allocating memory for "hi" and the null terminator
-        strcpy_s(target,3, "hi");
+        strcpy_s(target, 3, "hi");
     }
-   
+
+    
+
+
 
 
     // Getter functions
-    int getTripNum() const { return TripNum; }
-     char* getTarget(){
-        return target;
+    int getTripNum() {
+        return this->TripNum;
     }
-    const Date getDate()  { return date; }
+    char* getTarget() {
+        return this->target;
+    }
+    const Date getDate() {
+        return this->date;
+    }
 
     // Setter functions
-    void setTripNum(int t) {
-        if (t <= 0) {
-            TripNum = 420;
+    void setTripNum(int tripId) {
+        if (tripId <= 0) {
+            this->TripNum = 1; //default value
         }
         else {
-            TripNum = t;
+            this->TripNum = tripId;
         }
     }
 
-    void setTarget(const char* to) {
-        delete[] target;
-        if (isLetters(to)) {
-            target = new char[std::strlen(to) + 1];
-            strcpy_s(target, std::strlen(to) + 1, to);
+    void setTarget(const char* destination) {
+        if (isLetters(destination)) {
+            target = new char[std::strlen(destination) + 1];
+            strcpy_s(target, std::strlen(destination) + 1, destination);
+            this->target[tripDestinationLength - 1] = '\0';
         }
         else {
-            target = new char[3];  // Allocating memory for "hi" and the null terminator
-            strcpy_s(target,3, "hi");
+            strcpy_s(target, 3, "hi");
         }
-    }
-
-     void setDate(const Date& d) {
-        date = d;
     }
 
     bool isLetters(const char* temp) const {
@@ -77,6 +89,9 @@ public:  // Only one public specifier is needed
         return true;
     }
 
+     void setDate(const Date& d) {
+        date = d;
+    }
     void printTrip() const {
         std::cout << "Trip Number: " << TripNum << std::endl;
         std::cout << "Target: " << target << std::endl;
