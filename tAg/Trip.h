@@ -70,14 +70,18 @@ public:  // Only one public specifier is needed
     }
 
     void setTarget(const char* destination) {
+        
         if (isLetters(destination)) {
             target = new char[std::strlen(destination) + 1];
             strcpy_s(target, std::strlen(destination) + 1, destination);
-            this->target[tripDestinationLength - 1] = '\0';
+            this->target[std::strlen(target)] = '\0';
+            
         }
         else {
+            target = new char[3];
             strcpy_s(target, 3, "hi");
         }
+        
     }
 
     bool isLetters(const char* temp) const {
