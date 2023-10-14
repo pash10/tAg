@@ -17,10 +17,6 @@ public:
         setYear(y);
     }
 
-    // Destructor
-    ~Date() {
-        std::cout << "Date object destroyed." << std::endl;
-    }
 
     // Getter functions
     int getDay() const { return day; }
@@ -55,4 +51,4 @@ public:
     }
 };
 
-
+#endif
