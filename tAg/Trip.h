@@ -12,22 +12,23 @@ private:
     int TripNum;
     char* target;
     Date date;
+    static int count;
 
 public:  // Only one public specifier is needed
+ 
 
-
-    Trip(int tripID, char* destination, Date date) {
-        setTripNum(tripID);
+    Trip(char* destination, Date date) {
+        TripNum = countBigger();
         setTarget(destination);
         setDate(date);
     }
 
     Trip(Trip& trip) {
-        setTripNum(trip.getTripNum());
+        this->TripNum = trip.getTripNum();
         setTarget(trip.getTarget());
         setDate(trip.getDate());
     }
-    \
+    
 
         /*Trip(const Trip& trip) {
             setTripNum(trip.getTripNum());
@@ -38,12 +39,18 @@ public:  // Only one public specifier is needed
         }*/
 
 
-        Trip() : TripNum(420), date(1, 2, 3) {
+        Trip() : date(1, 2, 3) {
+        TripNum = countBigger();
         target = new char[3];  // Allocating memory for "hi" and the null terminator
         strcpy_s(target, 3, "hi");
     }
 
-    
+        static int countBigger() {
+            {
+                count++;
+                return count;
+            }
+    }
 
 
 
@@ -59,16 +66,7 @@ public:  // Only one public specifier is needed
         return this->date;
     }
 
-    // Setter functions
-    void setTripNum(int tripId) {
-        if (tripId <= 0) {
-            this->TripNum = 1; //default value
-        }
-        else {
-            this->TripNum = tripId;
-        }
-    }
-
+ 
     void setTarget(const char* destination) {
         
         if (isLetters(destination)) {
@@ -99,7 +97,10 @@ public:  // Only one public specifier is needed
     void printTrip() const {
         std::cout << "Trip Number: " << TripNum << std::endl;
         std::cout << "Target: " << target << std::endl;
-        date.PrinDat();
+        date.printDate();
+    }
+    void printCount() const {
+        std::cout << "plz " << count << std::endl;
     }
 
 
